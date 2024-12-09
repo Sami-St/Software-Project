@@ -1,0 +1,1 @@
+Benötigt wird pydantic. Installieren mit pip install in cmd.
