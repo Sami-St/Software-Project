@@ -1,5 +1,6 @@
 import sqlite3
 from models import User
+from password_utils import hash_password
 import os
 
 class Database():
@@ -11,7 +12,7 @@ class Database():
 
         try:
 
-            db_file_path = 'datenbank.db'
+            db_file_path = 'database/datenbank.db'
             self.conn = sqlite3.connect(os.path.abspath(db_file_path))
             return self.conn
         
@@ -27,16 +28,17 @@ class Database():
 
         try:
 
+            hashed_pw = hash_password(user.password)
 
             self.cursor.execute("""INSERT INTO users (name, email, password, rolle)
-                                VALUES (?, ?, ?, ?)""", (user.name, user.email, user.password, user.userType))
+                                VALUES (?, ?, ?, ?)""", (user.name, user.email, hashed_pw, user.userType))
             self.conn.commit()
             self.cursor.execute("SELECT userID FROM users WHERE email = ?", (user.email, ))
             results = self.cursor.fetchone()
 
             if not results:
                 print("No user id found")
-                return False
+                return None
             
             user_id = results[0]
             print("Succesfully added data!")
