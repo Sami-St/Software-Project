@@ -1,0 +1,75 @@
+class Stundenplan:
+    def __init__(self):
+        # Initialisiere den Stundenplan als Dictionary
+        self.plan = {
+            "Montag": [],
+            "Dienstag": [],
+            "Mittwoch": [],
+            "Donnerstag": [],
+            "Freitag": []
+        }
+
+    def Fach_hinzufuegen(self, tag, zeit, fach):
+        """Fügt ein Fach zum Stundenplan hinzu."""
+        if tag in self.plan:
+            self.plan[tag].append({"Zeit": zeit, "Fach": fach})
+            print(f"{fach} wurde am {tag} um {zeit} hinzugefügt.")
+        else:
+            print("Ungültiger Tag.")
+
+    def Plan_anzeigen(self):
+        """Zeigt den gesamten Stundenplan an."""
+        for tag, faecher in self.plan.items():
+            print(f"\n{tag}:")
+            if faecher:
+                for eintrag in faecher:
+                    print(f"  {eintrag['Zeit']}: {eintrag['Fach']}")
+            else:
+                print("  Keine Fächer eingetragen.")
+
+    def Fach_entfernen(self, tag, zeit):
+        """Entfernt ein Fach aus dem Stundenplan."""
+        if tag in self.plan:
+            faecher = self.plan[tag]
+            for eintrag in faecher:
+                if eintrag['Zeit'] == zeit:
+                    faecher.remove(eintrag)
+                    print(f"Das Fach um {zeit} wurde am {tag} entfernt.")
+                    return
+            print(f"Kein Fach um {zeit} gefunden.")
+        else:
+            print("Ungültiger Tag.")
+
+
+def main():
+    stundenplan = Stundenplan()
+
+    while True:
+        print("\nStundenplan-Verwaltung")
+        print("1. Fach hinzufügen")
+        print("2. Stundenplan anzeigen")
+        print("3. Fach entfernen")
+        print("4. Beenden")
+
+        wahl = input("Wähle eine Option: ")
+
+        if wahl == "1":
+            tag = input("Tag (z. B. Montag): ")
+            zeit = input("Zeit (z. B. 08:00): ")
+            fach = input("Fach (z. B. Mathematik): ")
+            stundenplan.Fach_hinzufuegen(tag, zeit, fach)
+        elif wahl == "2":
+            stundenplan.Plan_anzeigen()
+        elif wahl == "3":
+            tag = input("Tag (z. B. Montag): ")
+            zeit = input("Zeit (z. B. 08:00): ")
+            stundenplan.Fach_entfernen(tag, zeit)
+        elif wahl == "4":
+            print("Programm beendet.")
+            break
+        else:
+            print("Ungültige Auswahl. Bitte versuche es erneut.")
+
+
+if __name__ == "__main__":
+    main()
