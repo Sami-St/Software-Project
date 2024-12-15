@@ -1,6 +1,6 @@
 import sqlite3
 from models import User
-from password_utils import hash_password
+import password_utils
 import os
 
 
@@ -22,7 +22,8 @@ class Database:
         self.cursor = self.conn.cursor()
 
         try:
-            hashed_pw = hash_password(user.password)
+          
+            hashed_pw = password_utils.hash_password(user.password)
 
             self.cursor.execute(
                 """INSERT INTO users (name, email, password, rolle)
@@ -65,6 +66,36 @@ class Database:
             return False
         finally:
             self.conn.close()
+    
+    def verify_email(self, data):
+
+        self.conn = self.__connect_to_db()
+        self.cursor = self.conn.cursor()
+        
+        self.cursor.execute("SELECT email FROM users WHERE email = ?", (data, ))
+        found_email = self.cursor.fetchone()
+
+        if found_email:
+
+            return True
+
+        return False
+    
+    def verify_password(self, email, password):
+
+        self.conn = self.__connect_to_db()
+        self.cursor = self.conn.cursor()
+        
+        self.cursor.execute("SELECT password FROM users WHERE email = ?", (email,))
+        results = self.cursor.fetchone()
+
+        pw_exists = password_utils.check_pw(stored_password=results[0], given_password=password)
+
+        if pw_exists:
+
+            return True
+
+        return False
 
     def del_data(self):
         self.conn = self.__connect_to_db()
