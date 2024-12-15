@@ -1,0 +1,199 @@
+body {
+    background-image: url("../images/school.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: block;
+    text-align: center;
+}
+
+.registerH2 {
+    display: block;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.loginH2 {
+    display: inline-block;
+    background-color: white;
+    font-weight: bold;
+    font-family: arial;
+    font-size: 25px;
+    padding: 20px 500px;
+    margin-top: 45px;
+}
+
+#registerForm {
+    background-color: #D9D9D9;
+    margin-top: 60px;
+    width: 500px;
+    overflow: hidden;
+    height: auto;
+    display: inline-block;
+    border: 1px solid black;
+}
+
+#loginForm {
+    
+    background-color: #D9D9D9;
+    position: relative;
+    padding: 50px 100px 0;
+    overflow: hidden;
+    height: auto;
+    display: inline-block;
+    border: 1px solid black;   
+}
+
+.registerFormInput {
+    display: inline-block;
+    position: relative;
+    /* border: 1px solid black; */
+    margin: 0 30px;
+    margin-bottom: 15px;
+}
+
+.loginFormInput {
+    display: block;
+    position: relative;
+    margin: 0 30px;
+    margin-bottom: 15px;
+}
+
+.formSubmitBtn {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.submitBtn {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: arial;
+    text-shadow: 1px 1px black;
+    background-color: #0C098C;
+    padding: 10px 40px;
+    margin-top: 10px;
+    border: none;
+    transition: background-color 0.25s;
+}
+
+.submitBtn:hover, #fachHinzufügenBtn:hover {
+    cursor: pointer;
+    background-color: #1815c1;
+}
+
+#fachHinzufügenBtn {
+    border: none;
+    background-color:#0C098C;
+    color: white;
+    font-weight: bold;
+    font-family: arial;
+    text-shadow: 1px 1px black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.25s;
+}
+
+#fachDropdownMenu {
+    padding: 2px 4px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+.registerInputField, .loginInputField{
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+    padding: 6px 10px;
+    border: 1.5px black solid;
+}
+
+label {
+    font-weight: bold;
+    font-family: arial;
+}
+
+.loginEyeIcon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    margin-right: 8px;
+    bottom: 2px;
+    cursor: pointer;
+}
+.registerEyeIcon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    right: 0;
+    margin-right: 8px;
+    bottom: 7px;
+    cursor: pointer;
+    /* border: 1px black solid; */
+}
+
+.messageEl {
+    font-weight: bold;
+    font-family: arial;
+    font-size: 15px;
+    padding: 10px 20px;
+    margin-top: 0;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+/* body {
+    background-color: #19181D;
+    display: flex;
+}
+
+.container {
+    color: #1BFECE;
+    font-weight: bold;
+    background-color: #111216;
+    border: 1px solid black;
+    margin: 70px auto;
+    width: 500px;;
+    padding: 10px;
+}
+
+.buttons {
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    background-color: #09FEC6;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.inputField {
+    display: flex;
+    margin: 5px 0;
+    padding: 6px 10px;
+}
+
+.inputField:focus {
+    outline: none;
+}
+
+.formSubmitBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+#submitBtn {
+    background-color: #09FEC6;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.25s;
+}
+*/
