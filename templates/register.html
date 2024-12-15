@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/auth.css">
+    <title>Register</title>
+</head>
+<body>
+        <form id="registerForm">
+            <h2 class="registerH2">Benutzer erstellen</h2>
+            
+            <div class="registerFormInput">
+                <label for="nameInput">Username:</label>
+                <input type="text" name="name" id="nameInput" class="registerInputField" maxlength="25" required>
+            </div>
+
+            <div class="registerFormInput">
+                <label for="emailInput">E-Mail:</label><br>
+                <input type="email" name="email" id="emailInput" class="registerInputField" maxlength="25" required>
+            </div>
+
+            <div class="registerFormInput" style="margin-right: 50px;">
+                <label for="passwordInput">Password:</label><br>
+                <input type="password" name="password" id="passwordInput" class="registerInputField"  minlength="12" maxlength="16" required><img src="/static/icons/eye1.png" alt="eye icon" class="registerEyeIcon">
+            </div>
+
+            <div class="registerFormInput">
+                <label>Rolle:</label><br>
+                <label for="user_type_lehrer">Lehrer</label>
+                <input type="radio" id="user_type_lehrer" name="user-type" value="Lehrer">
+                <label for="user_type_schüler">Schüler</label>
+                <input type="radio" id="user_type_schüler" name="user-type" value="Schüler"><br>
+            </div>
+
+            <div class="registerFormInput" id="lehrerAnsichtDiv" style="display: none;">
+                <label for="fachDropdownMenu">Fach hinzufügen:</label>
+                <select name="subjects" id="fachDropdownMenu" required>
+                    <option value="bitte auswählen..." hidden>bitte auswählen...</option>
+                    <option value="Mathematik">Mathematik</option>
+                    <option value="Deutsch">Deutsch</option>
+                    <option value="Sachunterricht">Sachunterricht</option>
+                    <option value="Kunst">Kunst</option>
+                    <option value="Sport">Sport</option>
+                    <option value="Religion">Religion</option>
+                    <option value="Englisch">Englisch</option>
+                    <option value="Musik">Musik</option>
+                    <option value="Geschichte">Geschichte</option>
+                </select>
+                <button type="button" id="fachHinzufügenBtn" disabled>Hinzufügen</button>
+                <ul id="hinzugefügteFächer" style="margin-bottom: 10px;">Zugewiesene Fächer: </ul>
+            </div>
+                <p class="messageEl" style="display: none;"></p>
+            <div class="registerFormInput">
+                <button class="submitBtn" type="submit">Register</button>
+            </div>
+        </form>
+        
+    <script src="../static/js/register.js"></script>
+</body>
+</html>

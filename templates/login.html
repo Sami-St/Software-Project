@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/auth.css">
+    <title>Login</title>
+</head>
+<body>
+    <h2 class="loginH2">Willkommen!</h2>
+    <form id="loginForm">
+
+        <div class="loginFormInput">
+            <label for="emailInput">E-Mail:</label>
+            <input type="email" name="email" id="emailInput" class="loginInputField" maxlength="25" required>
+        </div>
+
+        <div class="loginFormInput">
+            <label for="passwordInput">Password:</label>
+            <input type="password" name="password" id="passwordInput" class="loginInputField"  minlength="12" maxlength="16" required><img src="/static/icons/eye1.png" alt="eye icon" class="loginEyeIcon">
+        </div>
+        
+        <p class="messageEl" style="display: none;"></p>
+        <div class="formSubmitBtn">
+            <button class="submitBtn" type="submit">Login</button>
+        </div>
+
+    <script src="../static/js/login.js"></script>
+</body>
+</html>
