@@ -3,74 +3,68 @@ from models import User
 import password_utils
 import os
 
-class Database():
 
+class Database:
     def __init__(self):
         self.conn = None
 
     def __connect_to_db(self):
-
         try:
-
             db_file_path = 'database/datenbank.db'
             self.conn = sqlite3.connect(os.path.abspath(db_file_path))
             return self.conn
-        
         except Exception as e:
             print("Failed to connect to database: ", e)
             return False
-        
-    # async damit man "await" auf die Funktion anwenden kann in der app.py Datei
-    async def create_user(self, user: User):
 
+    async def create_user(self, user: User):
         self.conn = self.__connect_to_db()
         self.cursor = self.conn.cursor()
 
         try:
-
+          
             hashed_pw = password_utils.hash_password(user.password)
 
-            self.cursor.execute("""INSERT INTO users (name, email, password, rolle)
-                                VALUES (?, ?, ?, ?)""", (user.name, user.email, hashed_pw, user.userType))
+            self.cursor.execute(
+                """INSERT INTO users (name, email, password, rolle)
+                VALUES (?, ?, ?, ?)""",
+                (user.name, user.email, hashed_pw, user.userType),
+            )
             self.conn.commit()
-            self.cursor.execute("SELECT userID FROM users WHERE email = ?", (user.email, ))
+            self.cursor.execute(
+                "SELECT userID FROM users WHERE email = ?", (user.email,)
+            )
             results = self.cursor.fetchone()
 
             if not results:
                 print("No user id found")
                 return None
-            
-            user_id = results[0]
-            print("Succesfully added data!")
-            return user_id
 
+            user_id = results[0]
+            print("Successfully added data!")
+            return user_id
         except Exception as e:
             print("An error has occurred while trying to insert data into the database: ", e)
             return False
-        
         finally:
-
             self.conn.close()
 
-    def add_subjects(self, user_id, fächer):
-
+    def add_subjects(self, user_id, faecher):
         try:
             self.conn = self.__connect_to_db()
             self.cursor = self.conn.cursor()
 
-            for fach in fächer:
-                self.cursor.execute("INSERT INTO fächer (fachName, lehrerID) VALUES (?, ?)", (fach, user_id))
+            for fach in faecher:
+                self.cursor.execute(
+                    "INSERT INTO fächer (fachName, lehrerID) VALUES (?, ?)",
+                    (fach, user_id),
+                )
             self.conn.commit()
-
             return True
-        
         except Exception as e:
-
-            print("An exception occured in func add_subjects: ", e)
+            print("An exception occurred in func add_subjects: ", e)
             return False
-        
         finally:
-
             self.conn.close()
     
     def verify_email(self, data):
@@ -104,7 +98,6 @@ class Database():
         return False
 
     def del_data(self):
-
         self.conn = self.__connect_to_db()
         self.cursor = self.conn.cursor()
 
@@ -118,3 +111,40 @@ class Database():
         print("Success delete from all tables!")
 
         self.conn.close()
+
+    # Neue Methode zum Erstellen der Tabellen
+    def create_tables(self):
+        """Erstellt die notwendigen Tabellen in der Datenbank."""
+        self.conn = self.__connect_to_db()
+        cursor = self.conn.cursor()
+
+        # Tabelle für Klassen erstellen
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS klassen (
+                klassen_name TEXT PRIMARY KEY
+            )
+        """)
+
+        # Tabelle für Schüler erstellen
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS schueler (
+                schueler_name TEXT,
+                klassen_name TEXT,
+                FOREIGN KEY (klassen_name) REFERENCES klassen (klassen_name)
+            )
+        """)
+
+        # Tabelle für Stundenpläne erstellen
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS stundenplan (
+                klassen_name TEXT,
+                tag TEXT,
+                zeit TEXT,
+                fach TEXT,
+                FOREIGN KEY (klassen_name) REFERENCES klassen (klassen_name)
+            )
+        """)
+
+        self.conn.commit()
+        self.conn.close()
+        print("Tables created successfully.")
