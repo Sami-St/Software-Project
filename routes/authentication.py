@@ -62,7 +62,7 @@ def login():
 
         if not data:
             return jsonify({"message": "No data provided"}), 400
-        
+
         try:
         
             user = User(
@@ -73,14 +73,13 @@ def login():
             email_valid = db.verify_email(user.email)
             password_valid =  db.verify_password(user.email, user.password)
 
-            if not email_valid and not password_valid:
+            if not email_valid or not password_valid:
 
                 return jsonify({"message": "Email oder Passwort ist falsch."}), 401
             
             return jsonify({"message": "Login erfolgreich."}), 201
         
         except Exception as e:
-            print("An exception occurred: ", e)
             return jsonify({"message": "Server error"}), 500
         
     return render_template("login.html")
