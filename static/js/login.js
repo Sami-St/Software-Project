@@ -3,10 +3,6 @@ const passwordField = document.getElementById("passwordInput");
 const messageEl = document.querySelector(".messageEl");
 const submitBtnEl = document.querySelector(".submitBtn");
 
-console.log("showpasswordbtn is ", showPasswordBtn)
-console.log("passwordfield is ", passwordField)
-console.log("messageel is ", messageEl)
-
 showPasswordBtn.addEventListener("click", () => toggleShowPassword(passwordField, showPasswordBtn))
 
 function toggleShowPassword(targetField, toggleBtn){

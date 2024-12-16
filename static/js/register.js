@@ -137,7 +137,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
                 
                 updateMessageBlock(responseMessage, "green", "white")
 
-                // nach 3 Sekunden Delay an /home weiterleiten
+                // nach 3 Sekunden Delay an /login weiterleiten
                 setTimeout(() => {
                     window.location.href="/login";
                 }, 3000);
