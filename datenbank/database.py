@@ -45,7 +45,7 @@ class Database():
             return user_id
 
         except Exception as e:
-            print("An error has occurred while trying to insert data into the database: ", e)
+            print("An exception occurred in func create_user: ", e)
             return False
         
         finally:
@@ -83,14 +83,13 @@ class Database():
             found_email = self.cursor.fetchone()
 
             if found_email:
-                print("found email ", found_email)
                 return True
 
             return False
         
         except Exception as e:
 
-            print("An exception occurred: ", e)
+            print("An exception occured in func verify_email: ", e)
             return False
         
         finally:
@@ -109,14 +108,13 @@ class Database():
             pw_exists = password_utils.check_pw(stored_password=results[0], given_password=password)
 
             if pw_exists:
-                print("pw_exists var is: ", pw_exists)
                 return True
 
             return 
         
         except Exception as e:
 
-            print("An exception occurred: ", e)
+            print("An exception occured in func verify_password: ", e)
             return False
         
         finally:
