@@ -1,10 +1,8 @@
 from flask import Flask, render_template, redirect, url_for
-from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from routes.authentication import authentication
 
 app = Flask(__name__)
-CORS(app)
 jwt = JWTManager(app)
 app.config['SECRET_KEY'] = "temporarysecretkey"
 app.register_blueprint(authentication)
