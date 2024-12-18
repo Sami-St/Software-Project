@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_jwt_extended import JWTManager
-from routes.authentication import authentication
+from routes import authentication
 
 app = Flask(__name__)
 jwt = JWTManager(app)

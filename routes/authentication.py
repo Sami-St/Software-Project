@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify
 from models import User
-from database.database import Database
+from datenbank.database import Database
 
 authentication = Blueprint("authentication", __name__)
 db = Database()
