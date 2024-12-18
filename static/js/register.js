@@ -79,7 +79,6 @@ function updateFächerListe() {
 
 function updateMessageBlock(messageText, backgroundColor, fontColor){
 
-    console.log("called with: ", messageEl, backgroundColor, fontColor)
     messageEl.innerHTML = messageText;
     messageEl.style.backgroundColor = backgroundColor;
     messageEl.style.color = fontColor;

@@ -17,7 +17,6 @@ function toggleShowPassword(targetField, toggleBtn){
 
 function updateMessageBlock(messageText, backgroundColor, fontColor){
 
-    console.log("called with: ", messageEl, backgroundColor, fontColor)
     messageEl.innerHTML = messageText;
     messageEl.style.backgroundColor = backgroundColor;
     messageEl.style.color = fontColor;
@@ -60,7 +59,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
 
                 setTimeout(() => {
                     window.location.href="/home";
-                }, 2000);
+                }, 1500);
             }
         } catch (error){
             console.log("Inner try block error: ", error);
