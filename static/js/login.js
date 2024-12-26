@@ -23,8 +23,7 @@ function updateMessageBlock(messageText, backgroundColor, fontColor){
     messageEl.style.display = "block";
 }
 
-document.getElementById("loginForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+async function login () {
 
     try {
         const email = document.getElementById("emailInput").value;
@@ -34,32 +33,28 @@ document.getElementById("loginForm").addEventListener("submit", async function (
             "email": email,
             "password": password,
             };
-        
+        const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)};
+            
         try{
             updateMessageBlock("Überprüfe Daten...", "yellow", "black")
 
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            });
-
-            let result = await response.json()
-            let responseMessage = JSON.stringify(result.message)
+            const response = await fetch("/login", options);
+            const result = await response.json()
+            const responseMessage = JSON.stringify(result.message)
 
             if (!response.ok){
 
                 updateMessageBlock(responseMessage, "#FC4343", "white")
 
-            } else {
+            } else if (response.ok) {
 
+                const token = result.access_token;
+                localStorage.setItem("access token", token)
                 updateMessageBlock(responseMessage, "green", "white")
 
                 setTimeout(() => {
-                    window.location.href="/home";
-                }, 1500);
+                    makeRequestWithJWT();
+                    }, 1000);
             }
         } catch (error){
             console.log("Inner try block error: ", error);
@@ -68,4 +63,28 @@ document.getElementById("loginForm").addEventListener("submit", async function (
         } catch (error){
             console.log("Outter try block error occurred: ", error);
             }
-});
+};
+
+async function makeRequestWithJWT() {
+
+    const token = localStorage.getItem("access token")
+
+    const options = {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+    };
+
+    const response = await fetch('/home', options)
+
+    if (response.ok){
+        const homepage = await response.text();
+        document.documentElement.innerHTML = homepage;
+        // update browser url
+        window.history.pushState({}, '', '/home');
+
+    } else {
+        alert("error")
+    }
+};  

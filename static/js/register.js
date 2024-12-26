@@ -101,7 +101,6 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             // den String "fächer" in ein Array umwandeln; entferne unnötiger Text und White Spaces
             fächer = fächer.replace("Zugewiesene Fächer: ", "")
             fächerArray = fächer.split(", ").filter(fach => fach !== "")
-
         } else {
             fächerArray = null
         }
@@ -136,10 +135,10 @@ document.getElementById('registerForm').addEventListener('submit', async functio
                 
                 updateMessageBlock(responseMessage, "green", "white")
 
-                // nach 3 Sekunden Delay an /login weiterleiten
+                // nach 2,5 Sekunden Delay an /home weiterleiten
                 setTimeout(() => {
                     window.location.href="/login";
-                }, 3000);
+                }, 2500);
             }  
             
             } catch (error){
