@@ -1,6 +1,6 @@
 import sqlite3
 from models import User
-import password_utils
+from utils import password_utils
 import os
 
 class Database():
@@ -28,10 +28,10 @@ class Database():
 
         try:
 
-            hashed_pw = password_utils.hash_password(user.password)
+            hashed_pw = password_utils.hash_pw(user.password)
 
             self.cursor.execute("""INSERT INTO users (name, email, password, rolle)
-                                VALUES (?, ?, ?, ?)""", (user.name, user.email, hashed_pw, user.userType))
+                                VALUES (?, ?, ?, ?)""", (user.name, user.email, hashed_pw, user.rolle))
             self.conn.commit()
             self.cursor.execute("SELECT userID FROM users WHERE email = ?", (user.email, ))
             results = self.cursor.fetchone()
@@ -45,7 +45,7 @@ class Database():
             return user_id
 
         except Exception as e:
-            print("An exception occurred in func create_user: ", e)
+            print("An error has occurred while trying to insert data into the database: ", e)
             return False
         
         finally:
@@ -89,7 +89,7 @@ class Database():
         
         except Exception as e:
 
-            print("An exception occured in func verify_email: ", e)
+            print("An exception occurred: ", e)
             return False
         
         finally:
@@ -110,16 +110,76 @@ class Database():
             if pw_exists:
                 return True
 
-            return 
+            print("verify pw returned none")
+            return False
         
         except Exception as e:
 
-            print("An exception occured in func verify_password: ", e)
+            print("An exception occurred: ", e)
             return False
         
         finally:
 
             self.conn.close()
+
+    def get_user_data(self, email):
+
+        try:
+
+            self.conn = self.__connect_to_db()
+            self.cursor = self.conn.cursor()
+
+            self.cursor.execute("SELECT userID, email, rolle FROM users WHERE email = ?", (email,))
+            results = self.cursor.fetchall()
+
+            if not results:
+                print("no data found")
+                return False
+            
+            # results ist ein tuple in einer Liste
+            user_data = {
+                "userID": results[0][0],
+                "email": results[0][1],
+                "rolle": results[0][2]
+            }
+
+            return user_data
+        
+        except Exception as e:
+            print("an exception occurred in func get_user_data, ", e)
+            return False
+        
+    def get_fächer(self, userID):
+
+        
+        try:
+
+            liste_fächer = []
+
+            self.conn = self.__connect_to_db()
+            self.cursor = self.conn.cursor()
+
+            self.cursor.execute("SELECT fachName FROM fächer WHERE lehrerID = ?", (userID,))
+            results = self.cursor.fetchall()
+            
+            for tuple in results:
+                for fach in tuple:
+                    liste_fächer.append(fach)
+
+            if not results:
+                print("No fächer found")
+                return False
+            
+            return liste_fächer
+
+        except Exception as e:
+            print("An exception occurred in func get_fächer ", e)
+            return False
+        
+        finally:
+
+            self.conn.close()
+            
 
     def del_data(self):
 
