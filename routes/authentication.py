@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from models import User
 from datenbank.database import Database
+from utils import token_utils
 
 authentication = Blueprint("authentication", __name__)
 db = Database()
@@ -20,7 +21,7 @@ async def register():
                 name= data["name"],
                 email = data["email"],
                 password= data["password"],
-                userType= data["user-type"]
+                rolle= data["user-type"]
             )
             fächer = data["fächer"]
 
@@ -44,11 +45,9 @@ async def register():
 
                 elif created_user and added_subjects:
                     return jsonify({"message": "Registierung abgeschlossen! Sie werden in Kürze weitergeleitet."}), 201
-        
-            return jsonify({"message": "Registierung abgeschlossen! Sie werden in Kürze weitergeleitet."}), 201
           
         except Exception as e:
-            print("An exception has occured: ", e)
+            print("An exception has occured in register route: ", e)
             return jsonify({"message":"An exception occurred"}), 400
 
     return render_template("register.html")
@@ -62,9 +61,9 @@ def login():
 
         if not data:
             return jsonify({"message": "No data provided"}), 400
-
-        try:
         
+        try:
+                
             user = User(
                 email = data["email"],
                 password = data["password"]
@@ -77,9 +76,16 @@ def login():
 
                 return jsonify({"message": "Email oder Passwort ist falsch."}), 401
             
-            return jsonify({"message": "Login erfolgreich."}), 201
+            token = token_utils.create_token(user.email)
+
+            if not token:
+                raise Exception
+            
+            return jsonify({"message": "Login erfolgreich.",
+                            "access_token": token}), 201
         
         except Exception as e:
-            return jsonify({"message": "Server error"}), 500
+            print("An exception occurred in login route: ", e)
+            return jsonify({"message": "Internal server error"}), 500
         
     return render_template("login.html")
