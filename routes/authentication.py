@@ -1,54 +1,57 @@
-from flask import Blueprint, render_template, request, jsonify
-from models import User
-from datenbank.database import Database
-from utils import token_utils
+from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
+from sqlalchemy.exc import SQLAlchemyError
+from flask_login import login_user, login_required, logout_user
+from models import User, Fächer
+from config import db, bcrypt
 
 authentication = Blueprint("authentication", __name__)
-db = Database()
 
 @authentication.route('/register', methods=["POST", "GET"])
-async def register():
+def register():
 
     if request.method == "POST":
     
         data = request.json
 
         if not data:
-            return jsonify({"message": "No data provided"}), 400
+            return jsonify({"message": "Missing credentials"}), 400
         
         try:
-            user = User(
-                name= data["name"],
+            new_user = User(
+                username= data["username"],
                 email = data["email"],
-                password= data["password"],
-                rolle= data["user-type"]
+                password= bcrypt.generate_password_hash(data["password"]).decode('utf-8'),
+                role= data["user-type"]
             )
+
             fächer = data["fächer"]
 
-            email_exists = db.verify_email(user.email) 
+            email_exists = User.query.filter_by(email=new_user.email).first() 
 
             if email_exists:
                 return jsonify({"message": "Email Adresse existiert bereits."}), 409
             
-            # db.create_user returns the user ID, which is used to associate subjects (Fächer) with the created user.
-            created_user = await db.create_user(user)
-
-            if not created_user:
-                return jsonify({"message": "Server error"}), 500
+            db.session.add(new_user)
+            db.session.flush() # Flush to get the new_user ID without committing
                 
-            elif created_user and fächer != None:
+            if fächer:
+
+                for fach_name in fächer:
+                    fach = Fächer(fach_name=fach_name, lehrer_id=new_user.id)
+                    db.session.add(fach)
                 
-                added_subjects = db.add_subjects(created_user, tuple(fächer))
-
-                if not added_subjects:
-                    return jsonify({"message": "Fächer konnten nicht hinzugefügt werden."}), 500
-
-                elif created_user and added_subjects:
-                    return jsonify({"message": "Registierung abgeschlossen! Sie werden in Kürze weitergeleitet."}), 201
+            db.session.commit()
+                
+            return jsonify({"message": "Registierung abgeschlossen! Sie werden in Kürze weitergeleitet."}), 201
           
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print("An SQLAlchemy error occurred: ", e)
+            return jsonify({"message": "Server error, could not create user"}), 500
+        
         except Exception as e:
-            print("An exception has occured in register route: ", e)
-            return jsonify({"message":"An exception occurred"}), 400
+            print("An error occured: ", e)
+            return jsonify({"message": "An unexpected error occurred"}), 500
 
     return render_template("register.html")
 
@@ -57,35 +60,36 @@ def login():
 
     if request.method == 'POST':
 
-        data = request.json
-
-        if not data:
-            return jsonify({"message": "No data provided"}), 400
-        
         try:
+            data = request.json
+
+            if not data:
+                return jsonify({"message": "Missing input"}), 400
                 
-            user = User(
-                email = data["email"],
-                password = data["password"]
-            )
 
-            email_valid = db.verify_email(user.email)
-            password_valid =  db.verify_password(user.email, user.password)
+            user = User.query.filter_by(email=data["email"]).first()
 
-            if not email_valid or not password_valid:
+            if user and bcrypt.check_password_hash(user.password, data["password"]):
+                login_user(user)
+                session['role'] = user.role
+                session['user_id'] = user.id
+                print("user id set: ", session['user_id'])
+                print("before the redirection")
+                return jsonify({"message": "Success!",
+                                "redirect_url": "/dashboard"}), 200
 
-                return jsonify({"message": "Email oder Passwort ist falsch."}), 401
-            
-            token = token_utils.create_token(user.email)
-
-            if not token:
-                raise Exception
-            
-            return jsonify({"message": "Login erfolgreich.",
-                            "access_token": token}), 201
+            else:
+                return jsonify({"message": "Email oder Passwort ist falsch"}), 401
         
         except Exception as e:
             print("An exception occurred in login route: ", e)
             return jsonify({"message": "Internal server error"}), 500
         
     return render_template("login.html")
+
+@authentication.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    session.clear()
+    return redirect(url_for('authentication.login'))
