@@ -1,11 +1,51 @@
-from pydantic import BaseModel, Field, EmailStr
-from typing import Optional
+from config import db
+from flask_login import UserMixin
 
-class User(BaseModel):
+class User(UserMixin, db.Model):
 
-    userID: Optional[int] = None
-    name: str = Field(default=None)
-    email: EmailStr = Field(default=None)
-    password: str = Field(default=None)
-    rolle : str = Field(default=None)
-    fächer: list[str] = Field(default=None)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), nullable=False)
+    email = db.Column(db.String(40), nullable=False, unique=True)
+    password = db.Column(db.String(60), nullable=False)
+    role = db.Column(db.String(10), nullable=False)
+
+class Noten(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    schüler_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    schüler_name = db.Column(db.String(30), db.ForeignKey("user.username"), nullable=False)
+    mathematik = db.Column(db.Integer, nullable=False)
+    deutsch = db.Column(db.Integer, nullable=False)
+    sachunterricht = db.Column(db.Integer, nullable=False)
+    kunst = db.Column(db.Integer, nullable=False)
+    sport = db.Column(db.Integer, nullable=False)
+    religion = db.Column(db.Integer, nullable=False)
+    englisch = db.Column(db.Integer, nullable=False)
+    musik = db.Column(db.Integer, nullable=False)
+    geschichte = db.Column(db.Integer, nullable=False)
+
+class Anwesenheit(db.Model):
+
+    id = db.Column(db.Integer, primary_key= True)
+    schüler_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    schüler_name = db.Column(db.String(30), db.ForeignKey("user.username"), nullable=False)
+    mathematik = db.Column(db.Integer, nullable=False)
+    deutsch = db.Column(db.Integer, nullable=False)
+    sachunterricht = db.Column(db.Integer, nullable=False)
+    kunst = db.Column(db.Integer, nullable=False)
+    sport = db.Column(db.Integer, nullable=False)
+    religion = db.Column(db.Integer, nullable=False)
+    englisch = db.Column(db.Integer, nullable=False)
+    musik = db.Column(db.Integer, nullable=False)
+    geschichte = db.Column(db.Integer, nullable=False)
+
+class Klassen(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    schüler_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+class Fächer(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    fach_name = db.Column(db.String(30), nullable=False)
+    lehrer_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
