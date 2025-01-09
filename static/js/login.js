@@ -23,68 +23,34 @@ function updateMessageBlock(messageText, backgroundColor, fontColor){
     messageEl.style.display = "block";
 }
 
-async function login () {
+async function login() {
 
-    try {
-        const email = document.getElementById("emailInput").value;
-        const password = document.getElementById("passwordInput").value;
+    const password = document.getElementById("passwordInput").value;
+    const email = document.getElementById("emailInput").value;
 
-        const data = {
-            "email": email,
-            "password": password,
-            };
-        const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)};
+    const data = {
+        "email": email,
+        "password": password,
+        };
+    const options = {method: 'POST', headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)};
             
-        try{
-            updateMessageBlock("Überprüfe Daten...", "yellow", "black")
+    try{
+        updateMessageBlock("Überprüfe Daten...", "yellow", "black")
 
-            const response = await fetch("/login", options);
-            const result = await response.json()
-            const responseMessage = JSON.stringify(result.message)
+        const response = await fetch("/login", options);
+        const result = await response.json()
+        const responseMessage = JSON.stringify(result.message)
 
-            if (!response.ok){
+        if (!response.ok){
 
-                updateMessageBlock(responseMessage, "#FC4343", "white")
+            updateMessageBlock(responseMessage, "#FC4343", "white")
 
-            } else if (response.ok) {
-
-                const token = result.access_token;
-                localStorage.setItem("access token", token)
-                updateMessageBlock(responseMessage, "green", "white")
-
-                setTimeout(() => {
-                    makeRequestWithJWT();
-                    }, 1000);
-            }
-        } catch (error){
-            console.log("Inner try block error: ", error);
-        }
-
-        } catch (error){
-            console.log("Outter try block error occurred: ", error);
-            }
-};
-
-async function makeRequestWithJWT() {
-
-    const token = localStorage.getItem("access token")
-
-    const options = {
-        method: "GET",
-        headers: {
-            'Authorization': `Bearer ${token}`
-        },
-    };
-
-    const response = await fetch('/home', options)
-
-    if (response.ok){
-        const homepage = await response.text();
-        document.documentElement.innerHTML = homepage;
-        // update browser url
-        window.history.pushState({}, '', '/home');
-
-    } else {
-        alert("error")
+        } else if (response.ok) {
+            
+            updateMessageBlock(responseMessage, "green", "white")
+            window.location.href = result.redirect_url
+         }
+    } catch (error){
+        console.log("Inner try block error: ", error);
     }
 };  

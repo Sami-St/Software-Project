@@ -1,17 +1,27 @@
 const lehrerAnsichtDiv = document.getElementById("lehrerAnsichtDiv");
 const dropdownMenu = document.getElementById("fachDropdownMenu");
-const hinzufügenBtn = document.getElementById("fachHinzufügenBtn");
+const fachHinzufügenBtn = document.getElementById("fachHinzufügenBtn");
 const listeFächer = document.getElementById("hinzugefügteFächer");
 const submitBtnEl = document.querySelector(".submitBtn");
 const radioBtns = document.querySelectorAll('input[name="user-type"]');
-const showPasswordBtn = document.querySelector(".registerEyeIcon")
-const passwordField = document.getElementById("passwordInput")
-const messageEl = document.querySelector(".messageEl")
+const showPasswordBtn = document.querySelector(".registerEyeIcon");
+const passwordField = document.getElementById("passwordInput");
+const messageEl = document.querySelector(".messageEl");
+const schülerAnsichtDiv = document.getElementById("schülerAnsichtDiv");
+const klasseHinzufügenBtn = document.getElementById("klasseZuweisenBtn");
 
 dropdownMenu.addEventListener("change", () => checkSelection(dropdownMenu));
 // überprüfe welcher Radio Btn derzeit selected ist.
 radioBtns.forEach((btn) => {
-    btn.addEventListener("change", () => checkSelection(btn));
+    btn.addEventListener("change", () =>{
+        if (btn.value === "Lehrer"){
+            lehrerAnsichtDiv.style.display = "block";
+            schülerAnsichtDiv.style.display = "none";
+        } else {
+            schülerAnsichtDiv.style.display = "block";
+            lehrerAnsichtDiv.style.display = "none";
+        }
+    })
 });
 
 showPasswordBtn.addEventListener("click", () => toggleShowPassword(passwordField, showPasswordBtn))
@@ -30,18 +40,14 @@ function checkSelection(element){
 
     if (element === dropdownMenu){
         if (element.value !== "bitte auswählen..."){
-            hinzufügenBtn.removeAttribute("disabled");
+            fachHinzufügenBtn.removeAttribute("disabled");
         } else {
-            hinzufügenBtn.setAttribute("disabled", "");
+            fachHinzufügenBtn.setAttribute("disabled", "");
         }
-    } else if (element.value === "Lehrer"){
-            lehrerAnsichtDiv.removeAttribute("style")
-        } else {
-            lehrerAnsichtDiv.setAttribute("style", "display: none;")
-        }
-}
+    };
+};
 
-hinzufügenBtn.addEventListener("click", updateFächerListe)
+fachHinzufügenBtn.addEventListener("click", updateFächerListe)
 
 let fächerArray = [];
 
@@ -61,7 +67,12 @@ function updateFächerListe() {
         }
 
     } else {
-        updateMessageBlock("Sie dürfen maximal 3 Fächer auswählen.", "#FC4343", "white")
+        updateMessageBlock("Sie dürfen maximal 3 Fächer auswählen.", "#FC4343", "white");
+
+        // MessageBlock nach 5 sec wieder verstecken
+        setTimeout(() => {
+            messageEl.style.display = "none";
+        }, 5000);
         return;
     }
 
@@ -88,7 +99,7 @@ function updateMessageBlock(messageText, backgroundColor, fontColor){
 document.getElementById('registerForm').addEventListener('submit', async function(event){
     event.preventDefault();
     try {
-        const username = document.getElementById("nameInput").value;
+        const username = document.getElementById("usernameInput").value;
         const email = document.getElementById("emailInput").value;
         const password = document.getElementById("passwordInput").value;
         const userType = document.querySelector('input[name="user-type"]:checked').value;
@@ -106,11 +117,11 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         }
 
         const data = {
-            "name": username,
+            "username": username,
             "email": email,
             "password": password,
             "user-type": userType,
-            "fächer": fächerArray
+            "fächer": fächerArray,
             } 
 
         try {
@@ -142,9 +153,11 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             }  
             
             } catch (error){
+                updateMessageBlock(`An error occurred: ${error}`, "#FC4343", "white")
                 console.log("Inner try block error: ", error);
             }     
         } catch (error){
+            updateMessageBlock(`An error occurred: ${error}`, "#FC4343", "white")
             console.log("Outter try block error occurred: ", error);
             }
 });
