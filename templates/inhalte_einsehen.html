@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Inhalte einsehen
+
+{% endblock %}
+
+{% block content %}
+
+<div class="user-interface-dashboard">
+    <h1 class="title">Verfügbare Inhalte:</h1>
+    <div>
+        <a class="auswahlOption" href="{{ url_for('user_interactions.kurse_einsehen') }}" style="text-decoration: none; color: black">Kurse einsehen</a>
+    </div>
+
+    <div>
+        <a class="auswahlOption" href="{{ url_for('user_interactions.noten_anwesenheit_einsehen') }}" style="text-decoration: none; color: black">Noten & Anwesenheit einsehen</a>
+    </div>
+
+    <div>
+        <a class="auswahlOption" href="{{ url_for('user_interactions.schedule_student') }}" style="text-decoration: none; color: black;">Stundenplan einsehen</a>
+
+</div>
+{% endblock %}

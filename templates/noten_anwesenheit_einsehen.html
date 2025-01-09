@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Noten & Anwesenheit
+
+{% endblock %}
+
+{% block content %}
+
+<div class="userinterface-noten">
+    <div>
+        <h1 class="title">Noten</h1>
+        <h1 class="tempMsg">Lade Daten...</h1>
+        <ul class="noten"></ul>
+    </div>
+</div>
+
+<div class="userinterface-anwesenheit">
+    <div>
+        <h1 class="title">Anwesenheit</h1>
+        <h1 class="tempMsg">Lade Daten...</h1>
+        <ul class="anwesenheit"></ul>
+    </div>
+</div>
+
+<p class="messageEl"></p>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/noten-anwesenheit.js') }}"></script>
+{% endblock %}
