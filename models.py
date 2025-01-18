@@ -49,3 +49,13 @@ class Fächer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fach_name = db.Column(db.String(30), nullable=False)
     lehrer_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+class Schedule(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teacher.id'))
+    subject = db.Column(db.String(50))
+    class_group = db.Column(db.String(50))
+    day_of_week = db.Column(db.String(10))
+    start_time = db.Column(db.Time)
+    end_time = db.Column(db.Time)
+
