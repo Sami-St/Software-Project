@@ -12,7 +12,7 @@
             
             <div class="registerFormInput">
                 <label for="nameInput">Username:</label>
-                <input type="text" name="name" id="nameInput" class="registerInputField" maxlength="25" required>
+                <input type="text" name="username" id="usernameInput" class="registerInputField" maxlength="25" required>
             </div>
 
             <div class="registerFormInput">
@@ -32,7 +32,10 @@
                 <label for="user_type_schüler">Schüler</label>
                 <input type="radio" id="user_type_schüler" name="user-type" value="Schüler"><br>
             </div>
-
+            <div class="registerFormInput" id="schülerAnsichtDiv" style="display: none;">
+                <label for="assignedClass">Klasse:</label>
+                <input type="text" name="assignedClass" id="assignedClass" maxlength="2">
+            </div>
             <div class="registerFormInput" id="lehrerAnsichtDiv" style="display: none;">
                 <label for="fachDropdownMenu">Fach hinzufügen:</label>
                 <select name="subjects" id="fachDropdownMenu" required>
