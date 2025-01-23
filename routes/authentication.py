@@ -1,16 +1,20 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from sqlalchemy.exc import SQLAlchemyError
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from models import User, Fächer, Klasse
 from config import db, bcrypt
 
 authentication = Blueprint("authentication", __name__)
 
-@authentication.route('/register', methods=["POST", "GET"])
+@authentication.route('/verwalter/register', methods=["POST", "GET"])
+@login_required
 def register():
 
     if request.method == "POST":
     
+        if current_user.role != "Verwalter":
+            return redirect(url_for("authentication.login"))
+        
         data = request.json
 
         if not data:
