@@ -9,8 +9,8 @@
     <h1>{{ student.name }}</h1>
     <p>Klasse: {{ student.class_group }}</p>
     <p>Email: {{ student.email }}</p>
-    <a href="{{ url_for('edit_student', id=schüler.id) }}">Bearbeiten</a>
-    <form action="{{ url_for('delete_student', id=schüler.id) }}" method="post">
+    <a href="{{ url_for('user_interactions.edit_student', id=student.id) }}">Bearbeiten</a>
+    <form action="{{ url_for('user_interactions.delete_student', id=student.id) }}" method="post">
         <input type="submit" value="Löschen">
     </form>
 </body>

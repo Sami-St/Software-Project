@@ -21,7 +21,7 @@ Schüler verwalten
             {% for student in students %}
             <tr>
                 <td>{{ student["id"] }}</td>
-                <td>{{ student["username"] }}</td>
+                <td><a class="itemEl" href="{{ url_for('user_interactions.teacher_student_detail', id=student['id']) }}" style="background-color: white;">{{ student["username"] }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

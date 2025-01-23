@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+Lehrer verwalten
+{% endblock %}
+
+{% block content %}
+
+
+<!-- <div style="position: absolute; top: 10px; right: 10px;">
+    <a href="{{ url_for('authentication.register') }}" style="text-decoration: none; font-size: 24px;">
+        <span style="display: inline-block; width: 30px; height: 30px; border: 2px solid black; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; background-color: white;">+</span>
+    </a>
+</div> -->
+
+<h1 class="title">Lehrerliste</h1>
+
+{% if teacher %}
+<div class="user-interface-lehrer">
+    <table class="lehrerTabelle">
+        <thead class="lehrerTabelleHeader">
+            <tr>
+                
+                <th class="lehrerTabelleHeader">ID</th>
+                <div class="addLehrerBtn">
+                    <a href="{{ url_for('authentication.register') }}">
+                        <span class="addLehrerBtnSpan">+</span>
+                    </a>
+                </div>
+                <th class="lehrerTabelleHeader">Benutzername</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lehrer in teacher %}
+            <tr>
+                <td class="lehrerTabelleCell">{{ lehrer.id }}</td>
+                <td class="lehrerTabelleCell"><a href="{{ url_for('user_interactions.lehrer_detail', lehrer_id=lehrer.id) }}">{{ lehrer.username }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% else %}
+    <p>Es sind keine Lehrer vorhanden.</p>
+</div>
+{% endif %}
+
+
+{% endblock %}

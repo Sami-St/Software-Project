@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Lehrer Details
+{% endblock %}
+
+{% block content %}
+
+<div class="userinterface-noten">
+    <div>
+        <h1 class="title">User: {{ user.username }}, Email: {{ user.email }}</h1>
+        <ul>
+            <h2 style="text-decoration: underline;">fächer:</h2>
+            {% for fach in fächer %}
+                <li>{{ fach }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="userinterface-anwesenheit">
+    <div>
+        <h2 class="title">Zuständige Klassen</h2>
+        <ul id="klassenListe">
+            <p id="lehrerID" style="display: none;">{{ user.id }}</p>
+            {% for klasse in klassen %}
+            <li>{{ klasse }}</li>
+            {% endfor %}
+            <img class="editIcon" src="../static/icons/pencil.png" alt="edit_icon">
+        </ul>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/edit_lehrer.js') }}"></script>
+{% endblock %}
