@@ -6,3 +6,5 @@ email: test@yahoo.com
 password: admin
 
 Hinweis: Schüler- und Lehrerprofile können nur durch Verwalter erstellt werden.
+
+Icons by: Freepik, Kiranshastry, Stasy on flaticon.com
