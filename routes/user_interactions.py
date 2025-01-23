@@ -147,7 +147,7 @@ def teacher_students():
     if current_user.role != 'Lehrer':
         return redirect(url_for('authentication.login'))
     
-    students = Schüler.query.filter_by(lehrer_id=current_user.id).all()
+    students = User.query.filter_by(role="Schüler").all()
     return render_template('teacher_students.html', students=students)
 
 # # Route für einzelne Schülerdetails
