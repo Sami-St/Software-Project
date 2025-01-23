@@ -12,7 +12,7 @@ login_manager = LoginManager()
 secret_key = "3b1c60e954f646299c20e9c6b09a0b7d"
 
 
-from models import User
+from models import User, Klasse
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -23,7 +23,7 @@ def create_app():
 
     app = Flask(__name__)
 
-    db_file_path = '../software_projekt/datenbank/datenbank.db'
+    db_file_path = '../Software-Project/datenbank/datenbank.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.abspath(db_file_path)}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = secret_key
@@ -47,9 +47,9 @@ def create_app():
         db.create_all()
 
     # delete all rows in the specified table
-    # from models import Klasse
+    # from models import Fächer
     # with app.app_context():
-    #     db.session.query(User).delete()
+    #     db.session.query(Fächer).delete()
     #     db.session.commit()
     
     # delete specified table
