@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Inhalte verwalten
+
+{% endblock %}
+
+{% block content %}
+<h1 class="title" style="display: inline-block; margin-bottom: 0;">Schüler auswählen:</h1>
+    <div class="user-interface-klassen">
+        {% if schüler_liste %}
+            {% for schüler in schüler_liste %}
+                <a href="{{ url_for('user_interactions.schüler_info', id=schüler['schüler_id']) }}" class="itemEl">{{ schüler["schüler_name"] }}</a>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Inhalte verwalten
+
+{% endblock %}
+
+{% block content %}
+<h1 class="title" style="display: inline-block; margin-bottom: 0;">Klasse auswählen:</h1>
+    <div class="user-interface-klassen">
+        {% if klassen %}
+            {% for klasse in klassen %}
+                <a class="itemEl" href="{{ url_for('user_interactions.klassen_info', id=klasse['id']) }}">{{ klasse["name"] }}</a>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

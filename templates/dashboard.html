@@ -8,19 +8,19 @@ dashboard
 
 <div class="user-interface-dashboard">
     <h1 class="title">Was wollen Sie tun?</h1>
-    {% if role== "Schüler" %}
+    {% if role == "Schüler" %}
         <a class="auswahlOption" href="{{ url_for('user_interactions.inhalte_einsehen') }}">Inhalte einsehen</a>
         <a class="auswahlOption" href="{{ url_for('authentication.logout') }}">Ausloggen</a>
         <a class="auswahlOption" href="{{ url_for('user_interactions.reset_password') }}">Passwort zurücksetzen</a>
 
     {% elif role == "Lehrer" %}
-        <a class="auswahlOption" href="#">Stundenplan einsehen</a>
-        <a class="auswahlOption">Schüler verwalten</a>
+        <a class="auswahlOption" href="{{ url_for('user_interactions.teacher_schedule') }}">Stundenplan einsehen</a>
+        <a class="auswahlOption" href="{{ url_for('user_interactions.teacher_students') }}">Schüler verwalten</a>
         <a class="auswahlOption" href="{{ url_for('authentication.logout') }}">Ausloggen</a>
         <a class="auswahlOption" href="{{ url_for('user_interactions.reset_password') }}">Passwort zurücksetzen</a>
 
     {% elif role == "Verwalter" %}
-        <a class="auswahlOption">Inhalte verwalten</a>
+        <a class="auswahlOption" href="{{ url_for('user_interactions.inhalte_verwalten') }}">Inhalte verwalten</a>
         <a class="auswahlOption" href="{{ url_for('authentication.logout') }}">Ausloggen</a>
         <a class="auswahlOption" href="{{ url_for('user_interactions.reset_password') }}">Passwort zurücksetzen</a>
     {% endif %}

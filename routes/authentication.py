@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for
 from sqlalchemy.exc import SQLAlchemyError
 from flask_login import login_user, login_required, logout_user
-from models import User, Fächer
+from models import User, Fächer, Klasse
 from config import db, bcrypt
 
 authentication = Blueprint("authentication", __name__)
@@ -25,6 +25,7 @@ def register():
             )
 
             fächer = data["fächer"]
+            klasse = data["klasse"]
 
             email_exists = User.query.filter_by(email=new_user.email).first() 
 
@@ -33,7 +34,12 @@ def register():
             
             db.session.add(new_user)
             db.session.flush() # Flush to get the new_user ID without committing
-                
+            
+            if klasse:
+
+                schüler_klasse = Klasse(schüler_id=new_user.id, schüler_name=new_user.username, name=klasse)
+                db.session.add(schüler_klasse)
+
             if fächer:
 
                 for fach_name in fächer:
@@ -71,10 +77,9 @@ def login():
 
             if user and bcrypt.check_password_hash(user.password, data["password"]):
                 login_user(user)
-                session['role'] = user.role
+                session['user_role'] = user.role
                 session['user_id'] = user.id
-                print("user id set: ", session['user_id'])
-                print("before the redirection")
+
                 return jsonify({"message": "Success!",
                                 "redirect_url": "/dashboard"}), 200
 
@@ -87,9 +92,34 @@ def login():
         
     return render_template("login.html")
 
+@authentication.route("/get_user", methods=["POST"])
+@login_required
+def get_user():
+
+    try:
+        user_id = session.get("user_id")
+        user = User.query.filter_by(id=user_id).with_entities(User.email, User.role).first()
+        user_info = {
+            "user_id": user_id,
+            "email": user.email,
+            "role": user.role
+        }
+
+        if user_id and user:
+            return jsonify({"user": user_info}), 200
+        
+        return jsonify({"message": "Failed to fetch user data"}), 401
+    
+    except Exception as e:
+        print("Exception occurred in /get_user: ", str(e))
+        return jsonify({"message": "An unexpteced error occurred"}), 500
+
 @authentication.route('/logout')
 @login_required
 def logout():
     logout_user()
     session.clear()
     return redirect(url_for('authentication.login'))
+
+# @authentication.route("/testlogin", methods=["GET", "POST"])
+    

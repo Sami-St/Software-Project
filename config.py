@@ -23,7 +23,7 @@ def create_app():
 
     app = Flask(__name__)
 
-    db_file_path = '../software_projekt/datenbank/datenbank.db'
+    db_file_path = '../testing_newcode/datenbank/datenbank.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.abspath(db_file_path)}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = secret_key
@@ -47,15 +47,15 @@ def create_app():
         db.create_all()
 
     # delete all rows in the specified table
-    # from models import Anwesenheit
+    # from models import Klasse
     # with app.app_context():
-    #     db.session.query(Anwesenheit).delete()
+    #     db.session.query(User).delete()
     #     db.session.commit()
     
     # delete specified table
     # from sqlalchemy import text
     # with app.app_context():
     #     with db.engine.connect() as connection:
-    #         connection.execute(text('DROP TABLE IF EXISTS table'))
+    #         connection.execute(text('DROP TABLE IF EXISTS klasse'))
 
     return app

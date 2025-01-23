@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Inhalte verwalten
+
+{% endblock %}
+
+{% block content %}
+
+<div class="user-interface-dashboard">
+    <h1 class="title">Bitte auswählen:</h1>
+    <div>
+        <a href="{{ url_for('user_interactions.benutzer_verwalten') }}" class="auswahlOption">Benutzer verwalten</a>
+    </div>
+    <div>
+        <a href="{{ url_for('user_interactions.stundenplan_verwalten') }}" class="auswahlOption">Stundenplan verwalten</a>
+    </div>
+</div>
+
+{% endblock %}

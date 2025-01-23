@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => getDatenSchüler());
-const notenListe = document.querySelector(".noten");
-const anwesenheitListe = document.querySelector(".anwesenheit");
+const notenListe = document.getElementById("noten");
+const anwesenheitListe = document.getElementById("anwesenheiten");
 const messageEl = document.querySelector(".messageEl");
 const tempMsg = document.querySelectorAll(".tempMsg");
 

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Noten & Anwesenheit
+
+{% endblock %}
+
+{% block content %}
+
+<div class="userinterface-noten">
+    <div>
+        <h1 class="title">Noten</h1>
+        <!-- <h1 class="tempMsg">Lade Daten...</h1> -->
+        <ul class="noten">
+            {% for fach, note in noten_liste %}
+                <li class="note">{{ fach }}: {{ note }}</li>
+                <img class="editIcon" src="../static/icons/pencil.png" alt="edit_icon">
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div class="userinterface-anwesenheit">
+    <div>
+        <h1 class="title">Anwesenheit</h1>
+        <!-- <h1 class="tempMsg">Lade Daten...</h1> -->
+        <ul class="anwesenheiten">
+            {% for fach, anwesenheit in anwesenheiten_liste %}
+                <li class="anwesenheit">{{ fach }}: {{ anwesenheit }}</li>
+                <img class="editIcon" src="../static/icons/pencil.png" alt="edit_icon">
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<p class="messageEl"></p>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/verwalter.js') }}"></script>
+{% endblock %}

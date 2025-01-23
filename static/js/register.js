@@ -8,7 +8,6 @@ const showPasswordBtn = document.querySelector(".registerEyeIcon");
 const passwordField = document.getElementById("passwordInput");
 const messageEl = document.querySelector(".messageEl");
 const schülerAnsichtDiv = document.getElementById("schülerAnsichtDiv");
-const klasseHinzufügenBtn = document.getElementById("klasseZuweisenBtn");
 
 dropdownMenu.addEventListener("change", () => checkSelection(dropdownMenu));
 // überprüfe welcher Radio Btn derzeit selected ist.
@@ -69,10 +68,10 @@ function updateFächerListe() {
     } else {
         updateMessageBlock("Sie dürfen maximal 3 Fächer auswählen.", "#FC4343", "white");
 
-        // MessageBlock nach 5 sec wieder verstecken
+        // MessageBlock nach 3 sec wieder verstecken
         setTimeout(() => {
             messageEl.style.display = "none";
-        }, 5000);
+        }, 3000);
         return;
     }
 
@@ -103,6 +102,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         const email = document.getElementById("emailInput").value;
         const password = document.getElementById("passwordInput").value;
         const userType = document.querySelector('input[name="user-type"]:checked').value;
+        const schülerKlasse = document.getElementById("assignedClass").value;
         let fächer = listeFächer.innerHTML;
         let fächerArray = [];
 
@@ -122,6 +122,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
             "password": password,
             "user-type": userType,
             "fächer": fächerArray,
+            "klasse": schülerKlasse
             } 
 
         try {
@@ -146,10 +147,9 @@ document.getElementById('registerForm').addEventListener('submit', async functio
                 
                 updateMessageBlock(responseMessage, "green", "white")
 
-                // nach 2,5 Sekunden Delay an /home weiterleiten
                 setTimeout(() => {
                     window.location.href="/login";
-                }, 2500);
+                }, 1000);
             }  
             
             } catch (error){

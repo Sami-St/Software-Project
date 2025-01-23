@@ -14,7 +14,7 @@ def index():
 @login_required
 def dashboard():
 
-    return render_template("dashboard.html", role=session["role"])
+    return render_template("dashboard.html", role=session["user_role"])
 
 if __name__ == '__main__':
 
