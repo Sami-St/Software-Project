@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, request, session, redirec
 from flask_login import login_required, current_user
 from sqlalchemy.exc import SQLAlchemyError
 from config import db, bcrypt
-from models import User, Klasse, Lehrer, Schüler, Anwesenheit, Noten, Schedule
+from models import User, Klasse, Lehrer, Schüler, Anwesenheit, Noten, Schedule, Fächer
 from datetime import datetime
 
 user_interactions = Blueprint("user_interactions", __name__)
@@ -157,7 +157,7 @@ def teacher_student_detail(id):
     if current_user.role != 'Lehrer':
         return redirect(url_for('authentication.login'))
     
-    student = Schüler.query.get_or_404(id)
+    student = User.query.get_or_404(id)
     return render_template('teacher_student_detail.html', student=student)
 
 # # Route für Schülerprofil bearbeiten
@@ -265,18 +265,76 @@ def schüler_info(id):
     if anwesenheiten and noten:
         return render_template("schüler_info.html", anwesenheiten_liste=anwesenheiten_liste, noten_liste=noten_liste)
     
-@user_interactions.route('/verwalter/inhalte_verwalten/lehrer')
+@user_interactions.route('/inhalte_verwalten/lehrer')
 @login_required
-def lehrer():
-
-    if current_user.role != "Verwalter":
+def verwalter_lehrer():
+    if current_user.role != 'Verwalter':
         return redirect(url_for('authentication.login'))
+   
+    teacher = User.query.filter_by(role="Lehrer").all()
+    return render_template('verwalter_lehrer.html', teacher=teacher)
+
+@user_interactions.route('/lehrer/<int:lehrer_id>')
+@login_required
+def lehrer_detail(lehrer_id):
+   
+    if current_user.role != 'Verwalter':
+        return redirect(url_for('authentication.login'))
+   
+   
+    lehrer = Lehrer.query.filter_by(id=lehrer_id).first_or_404()
+ 
+   
+    user = User.query.filter_by(id=lehrer.id).first_or_404()
+ 
+   
+    fächer = Fächer.query.filter_by(lehrer_id=lehrer.id).all()
+    klassen = Klasse.query.filter_by(lehrer_id=lehrer.id).all()
+ 
+    # Bereite die Daten für das Template vor
+    fächer_liste = [fach.fach_name for fach in fächer]
+    klassen_liste = [klasse.name for klasse in klassen]
+ 
+    return render_template(
+        'lehrer_detail.html',
+        user=user,
+        fächer=fächer_liste,
+        klassen=klassen_liste
+    )
+
+# Füge eine existierende Klasse einem Lehrerprofil hinzu
+@user_interactions.route('/verwalter/edit_lehrer/<int:lehrer_id>', methods=["GET", "POST"])
+@login_required
+def edit_lehrer(lehrer_id):
+
+    if request.method == "POST":
+        
+        if current_user.role != "Verwalter":
+            return redirect(url_for('authentication.login'))
+        
+        try:
+            data = request.json
+
+            klasse = Klasse.query.filter_by(name=data).first()
+
+            if not klasse:
+                return jsonify({"message": "Die angegebene Klasse existiert nicht."}), 404
+            
+            klasse.lehrer_id = lehrer_id
+            db.session.commit
+            return jsonify({"message": "Success"}), 200
+
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            print("an error occurred: ", e)
+
+        except Exception as e:
+            print("error while creating new class for lehrer: ", e)
+            return
+        
+    return render_template("edit_lehrer.html")
     
-    schüler_liste = User.query.filter_by(role="Schüler").all()
-
-    if schüler_liste:
-        return render_template('')
-
+    
 
 @user_interactions.route('/verwalter/inhalte_verwalten/stundenplan_verwalten')
 @login_required
