@@ -170,6 +170,11 @@ label {
     margin-top: 1%;
 }
 
+#userEmail {
+    background-color: #E0E0E0;
+    display: inline-block;
+}
+
 .messageEl {
     font-size: 17px;
     padding: 5px 10px;
@@ -190,7 +195,7 @@ ul {
     padding: 0;
 }
 
-table {
+#tableEl {
     background-color: #E0E0E0;
     border: 1px solid black;
     border-radius: 5px;
@@ -199,18 +204,18 @@ table {
     font-weight: bold;
 }
 
-tr {
+.studentScheduleRow {
     background-color: #E0E0E0;
     border: 1px solid black;
 }
 
-th {
+.studentScheduleHeader {
     border-bottom: 1px solid black;
     border-right: 1px solid black;
     padding: 10px 0;
 }
 
-td {
+.stunden {
     background-color: #E0E0E0;
     margin-top: 200px;
     border-right: 1px solid black;
@@ -252,6 +257,34 @@ td {
     justify-content: center;
     border: 1px solid black;
     margin: auto
+}
+
+.user-interface-lehrer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lehrerTabelle {
+    background-color: #E0E0E0;
+    border: 1px solid black;
+    width: auto;
+    height: auto;
+}
+
+.lehrerTabelleHeader {
+    border: 1px solid black;
+    padding: 15px;
+}
+
+.lehrerTabelleCell {
+    border-right: 1px solid black;
+}
+
+.addLehrerBtn {
+    position: absolute; 
+    margin-bottom: 70px;
+    margin-left: 185px;
 }
 
 .noten, .anwesenheiten {
