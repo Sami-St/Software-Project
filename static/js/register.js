@@ -128,7 +128,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         try {
             updateMessageBlock("Registrierung läuft...", "yellow", "black")
 
-            const response = await fetch("/register", {
+            const response = await fetch("/verwalter/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -148,7 +148,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
                 updateMessageBlock(responseMessage, "green", "white")
 
                 setTimeout(() => {
-                    window.location.href="/login";
+                    window.location.href="/klassen";
                 }, 1000);
             }  
             
