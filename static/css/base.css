@@ -44,6 +44,18 @@ label {
     border: none;
 }
 
+.lehrerTitle {
+    font-size: 20px;
+    display: inline-block;
+    background-color: yellow;
+    border: 1px solid black;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 5px 15px;
+    width: auto;
+    height: auto;
+    border: none;
+}
 .anzeigenBtn {
     color: darkblue;
     font-weight: bold;
@@ -173,6 +185,9 @@ label {
 #userEmail {
     background-color: #E0E0E0;
     display: inline-block;
+    padding: 5px 10px;
+    margin-top: 0;
+    width: auto;
 }
 
 .messageEl {
@@ -288,8 +303,8 @@ ul {
 
 .addLehrerBtn {
     position: absolute; 
-    margin-bottom: 70px;
-    margin-left: 185px;
+    margin-bottom: 80px;
+    margin-left: 190px;
 }
 
 .addLehrerBtn a:nth-child(1) {
@@ -307,7 +322,6 @@ ul {
     line-height: 30px; 
     font-weight: bold; 
     background-color: white;
-    padding-bottom: 2px;
 }
 
 .noten, .anwesenheiten {
@@ -342,4 +356,16 @@ ul {
 
 .löschenBtn:hover {
     background-color: rgb(53, 53, 255);
+}
+
+.notFoundMsg {
+    display: block;
+    background-color: #FC4343;
+    color: white;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
 }
