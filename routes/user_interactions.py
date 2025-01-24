@@ -184,10 +184,14 @@ def delete_student(id):
     if current_user.role != 'Lehrer':
         return redirect(url_for('authentication.login'))
     
-    student = Schüler.query.get_or_404(id)
-    db.session.delete(student)
-    db.session.commit()
-    return redirect(url_for('teacher_students'))
+    student = User.query.get_or_404(id)
+    if student:
+        Schüler.query.filter_by(id=student.id).delete()
+        Klasse.query.filter_by(schüler_id=student.id).delete()
+        db.session.delete(student)
+        db.session.commit()
+
+    return redirect(url_for('user_interactions.teacher_students'))
 
 @user_interactions.route('/verwalter/inhalte_verwalten')
 @login_required
