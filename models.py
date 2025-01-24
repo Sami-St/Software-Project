@@ -60,7 +60,7 @@ class Klasse(db.Model):
     schüler_id = db.Column(db.Integer, db.ForeignKey("schüler.id"), unique=True)
     schüler_name = db.Column(db.String(30), nullable=False)
     lehrer_id = db.Column(db.Integer, db.ForeignKey("lehrer.id"))
-    name = db.Column(db.String(30), nullable=False, unique=True)
+    name = db.Column(db.String(30), nullable=False)
 
     schüler = db.relationship("Schüler", backref="klasse")
     lehrer = db.relationship("Lehrer", backref="klassen")
@@ -71,6 +71,8 @@ class Fächer(db.Model):
     fach_name = db.Column(db.String(30), nullable=False)
     lehrer_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
+    user = db.relationship("User", backref="fächer")
+
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lehrer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -80,6 +82,8 @@ class Schedule(db.Model):
     start_time = db.Column(db.Time)
     end_time = db.Column(db.Time)
 
+    user = db.relationship("User", backref="schedule")
+
 # populate primary key in the corresponding table based on user role
 @event.listens_for(User, "after_insert")
 def create_related_records(mapper, connection, target):
@@ -88,7 +92,6 @@ def create_related_records(mapper, connection, target):
         connection.execute(
             Lehrer.__table__.insert().values(id=target.id)
         )
-        print("role is lehrer, id inserted!")
     elif target.role == "Schüler":
         # Automatically create a Schüler entry
         connection.execute(

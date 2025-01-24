@@ -12,7 +12,7 @@ login_manager = LoginManager()
 secret_key = "3b1c60e954f646299c20e9c6b09a0b7d"
 
 
-from models import User, Klasse
+from models import User
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -46,16 +46,18 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    # delete all rows in the specified table
-    # from models import Fächer
+
+
+    # delete rows in the specified table
+    # from models import Klasse
     # with app.app_context():
-    #     db.session.query(Fächer).delete()
+    #     db.session.query(User).delete()
     #     db.session.commit()
     
     # delete specified table
     # from sqlalchemy import text
     # with app.app_context():
     #     with db.engine.connect() as connection:
-    #         connection.execute(text('DROP TABLE IF EXISTS klasse'))
+    #         connection.execute(text('DROP TABLE IF EXISTS alembic_version'))
 
     return app
