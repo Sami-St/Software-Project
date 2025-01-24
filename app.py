@@ -7,7 +7,7 @@ app = create_app()
 @app.route("/", methods=["GET"])
 def index():
 
-    return redirect(url_for("authentication.register"))
+    return redirect(url_for("authentication.login"))
 
 
 @app.route('/dashboard', methods=['GET'])
