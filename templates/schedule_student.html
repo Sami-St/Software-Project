@@ -8,7 +8,7 @@ Stundenplan
 
 <div class="schedule">
     <h1 class="title">Stundenplan</h1>
-    <p id="userEmail">User: </p>
+    <p id="userEmail">User: {{ user }} </p>
     <table id="tableEl">
         <tr class="studentScheduleRow">
             <th class="studentScheduleHeader">Uhrzeit</th>
@@ -19,7 +19,7 @@ Stundenplan
             <th class="studentScheduleHeader">Freitag</th>
         </tr>
         <tr class="studentScheduleRow">
-            <td class="stunden">8:00 - 8:45</td>
+            <td class="uhrzeiten">8:00 - 8:45</td>
             <td class="stunden"></td>
             <td class="stunden"></td>
             <td class="stunden"></td>
@@ -27,7 +27,7 @@ Stundenplan
             <td class="stunden"></td>
         </tr>
         <tr class="studentScheduleRow">
-            <td class="stunden">8:50 - 9:35</td>
+            <td class="uhrzeiten">8:50 - 9:35</td>
             <td class="stunden"></td>
             <td class="stunden"></td>
             <td class="stunden"></td>
@@ -35,7 +35,7 @@ Stundenplan
             <td class="stunden"></td>
         </tr>
         <tr class="studentScheduleRow">
-            <td class="stunden">9:55 - 10:40</td>
+            <td class="uhrzeiten">9:55 - 10:40</td>
             <td class="stunden"></td>
             <td class="stunden"></td>
             <td class="stunden"></td>
@@ -43,7 +43,7 @@ Stundenplan
             <td class="stunden"></td>
         </tr>
         <tr class="studentScheduleRow">
-            <td class="stunden">10:45 - 11:30</td>
+            <td class="uhrzeiten">10:45 - 11:30</td>
             <td class="stunden"></td>
             <td class="stunden"></td>
             <td class="stunden"></td>
@@ -51,7 +51,7 @@ Stundenplan
             <td class="stunden"></td>
         </tr>
         <tr class="studentScheduleRow">
-            <td class="stunden">11:45 - 12:30</td>
+            <td class="uhrzeiten">11:45 - 12:30</td>
             <td class="stunden"></td>
             <td class="stunden"></td>
             <td class="stunden"></td>
@@ -59,7 +59,7 @@ Stundenplan
             <td class="stunden"></td>
         </tr>
         <tr class="studentScheduleRow">
-            <td class="stunden">12:35 - 13:45</td>
+            <td class="uhrzeiten">12:35 - 13:45</td>
             <td class="stunden"></td>
             <td class="stunden"></td>
             <td class="stunden"></td>
@@ -69,4 +69,8 @@ Stundenplan
     </table>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/schedule.js') }}"></script>
 {% endblock %}

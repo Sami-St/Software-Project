@@ -43,21 +43,21 @@ def create_app():
     login_manager.login_view = "authentication.login"
 
     # create tables defined in models.py in case they don't exist
-    with app.app_context():
-        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
 
 
     # delete rows in the specified table
     # from models import Klasse
     # with app.app_context():
-    #     db.session.query(User).delete()
+    #     db.session.query(Schedule).delete()
     #     db.session.commit()
     
     # delete specified table
     # from sqlalchemy import text
     # with app.app_context():
     #     with db.engine.connect() as connection:
-    #         connection.execute(text('DROP TABLE IF EXISTS alembic_version'))
+    #         connection.execute(text('DROP TABLE IF EXISTS schedule'))
 
     return app

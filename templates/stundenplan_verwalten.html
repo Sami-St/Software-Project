@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Inhalte verwalten
+
+{% endblock %}
+
+{% block content %}
+
+<div class="user-interface-dashboard"><br>
+    <div>
+        <a href="{{ url_for('user_interactions.stundenplan_klassen') }}" class="auswahlOption">Schüler Stundenplan</a>
+    </div>
+    <div>
+        <a href="{{ url_for('user_interactions.lehrer_liste') }}" class="auswahlOption">Lehrer Stundenplan</a>
+    </div>
+</div>
+
+{% endblock %}

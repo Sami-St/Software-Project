@@ -108,13 +108,7 @@ def noten_anwesenheit_einsehen():
 @login_required
 def schedule_student():
 
-    return render_template("schedule_student.html")
-
-@user_interactions.route('/schedule_teacher', methods=["GET"])
-@login_required
-def schedule_teacher():
-
-    return render_template("schedule_teacher.html")
+    return render_template("schedule_student.html", user=current_user.username)
 
 # Route für den Stundenplan des Lehrers
 @user_interactions.route('/teacher/schedule')
@@ -161,7 +155,7 @@ def teacher_student_detail(id):
     return render_template('teacher_student_detail.html', student=student)
 
 # # Route für Schülerprofil bearbeiten
-@user_interactions.route('/teacher/student/<int:id>/edit', methods=['GET', 'POST'])
+@user_interactions.route('/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_student(id):
     if current_user.role != 'Lehrer':
@@ -345,11 +339,58 @@ def edit_lehrer(lehrer_id):
     
     
 
-@user_interactions.route('/verwalter/inhalte_verwalten/stundenplan_verwalten')
+@user_interactions.route('/inhalte_verwalten/stundenplan_verwalten')
 @login_required
 def stundenplan_verwalten():
 
     if current_user.role != "Verwalter":
         return redirect(url_for('authentication.login'))
     
-    return render_template('inhalte_verwalten.html')
+    return render_template('stundenplan_verwalten.html')
+
+
+@user_interactions.route('/stundenplan_verwalten/klassen')
+@login_required
+def stundenplan_klassen():
+
+    if current_user.role != "Verwalter":
+        return redirect(url_for('authentication.login'))
+    
+    klassen = Klasse.query.all()
+
+    return render_template("klassen_stundenplan.html", klassen=klassen)
+
+@user_interactions.route('/lehrer_liste')
+@login_required
+def lehrer_liste():
+
+    if current_user.role != "Verwalter":
+        return redirect(url_for('authentication.login'))
+    
+    lehrer_liste = User.query.filter_by(role="Lehrer").all()
+
+    return render_template("lehrer_liste.html", lehrer_liste=lehrer_liste)
+
+@user_interactions.route('/stundenplan_lehrer/<int:lehrer_id>', methods=["GET", "POST"])
+@login_required
+def stundenplan_lehrer(lehrer_id):
+
+    if request.method == "POST":
+        
+        subject = request.form['subject']
+        day_of_week = request.form['day_of_week']
+        start_time = datetime.strptime(request.form['start_time'], '%H:%M').time()
+        end_time = datetime.strptime(request.form['end_time'], '%H:%M').time()
+
+        new_schedule = Schedule(lehrer_id=lehrer_id, subject=subject, day_of_week=day_of_week, start_time=start_time, end_time=end_time)
+        db.session.add(new_schedule)
+        db.session.commit()
+
+        return redirect(url_for('user_interactions.lehrer_liste'))
+
+    if current_user.role != "Verwalter":
+        return redirect(url_for('authentication.login'))
+    
+    # user = User.query.filter_by(id=lehrer_id).first()
+
+    return render_template("stundenplan_verwalten_lehrer.html", lehrer_id=lehrer_id)

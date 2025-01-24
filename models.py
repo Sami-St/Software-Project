@@ -77,7 +77,6 @@ class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lehrer_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     subject = db.Column(db.String(50))
-    class_group = db.Column(db.String(50))
     day_of_week = db.Column(db.String(10))
     start_time = db.Column(db.Time)
     end_time = db.Column(db.Time)

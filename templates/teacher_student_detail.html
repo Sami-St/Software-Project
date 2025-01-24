@@ -8,25 +8,23 @@
 
 {% block content %}
 <div class="user-interface-lehrer">
-<table class="userTabelle">
-    <thead class="userTabelleHeader">
-        <tr>
-            <th class="userTabelleHeader">ID</th>
-            <th class="userTabelleHeader">Benutzername</th>
-            <th class="userTabelleHeader">Email</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="userTabelleCellID">{{ student.id }}</td>
-            <td class="userTabelleCell"><a href="{{ url_for('user_interactions.edit_student', id=student.id) }}">{{ student.username }}</td>
-            <!-- <td class="userTabelleCell">{{ student.email }}</td> -->
-        </tr>
-    </tbody>
-</table>
-    <form id="deleteForm" action="{{ url_for('user_interactions.delete_student', id=student.id) }}" method="post">
-        <input class="löschenBtn" value="Löschen">
-    </form>
+    <table class="userTabelle">
+        <thead class="userTabelleHeader">
+            <tr>
+                <th class="userTabelleHeader">ID</th>
+                <th class="userTabelleHeader">Benutzername</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="userTabelleCellID">{{ student.id }}</td>
+                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.edit_student', id=student.id) }}">{{ student.username }}</td>
+            </tr>
+        </tbody>
+    </table>
+        <form id="deleteForm" action="{{ url_for('user_interactions.delete_student', id=student.id) }}" method="post">
+            <input class="löschenBtn" type="button" value="Löschen">
+        </form>
 </div>
 {% endblock %}
 

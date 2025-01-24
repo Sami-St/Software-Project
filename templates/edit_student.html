@@ -5,18 +5,19 @@ Schüler bearbeiten
 {% endblock %}
 
 {% block content %}
-<h1 title="">{{ student.name }} - Profil bearbeiten</h1>
-<form method="post">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="{{ student.name }}" required>
-        
-    <label for="class_group">Klasse:</label>
-    <input type="text" id="class_group" name="class_group" value="{{ student.class_group }}" required>
-        
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ student.email }}" required>
-        
-    <button type="submit">Speichern</button>
-</form>
-
+<h1 class="title">Profil bearbeiten</h1>
+<div class="user-interface-resetPw">
+    <form method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ student.name }}" required>
+            
+        <label for="class_group">Klasse:</label>
+        <input type="text" id="class_group" name="class_group" value="{{ student.class_group }}" required>
+            
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ student.email }}" required>
+            
+        <button class="submitBtn" type="submit">Speichern</button>
+    </form>
+</div>
 {% endblock %}

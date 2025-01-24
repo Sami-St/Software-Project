@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+Schüler bearbeiten
+{% endblock %}
+
+{% block content %}
+<h1 class="title">Profil bearbeiten</h1>
+
+<div class="user_interface-schedule">
+    <form method="post" action="/stundenplan_lehrer/{{lehrer_id}}">
+
+        <label for="subject">Fach:</label>
+        <input type="text" id="subject" name="subject" required><br>
+
+        <label for="day_of_week">Wochentag:</label>
+        <select id="day_of_week" name="day_of_week" required>
+            <option value="Montag">Montag</option>
+            <option value="Dienstag">Dienstag</option>
+            <option value="Mittwoch">Mittwoch</option>
+            <option value="Donnerstag">Donnerstag</option>
+            <option value="Freitag">Freitag</option>
+        </select><br>
+
+        <label for="start_time">Startzeit:</label>
+        <input type="time" id="start_time" name="start_time" required><br>
+
+        <label for="end_time">Endzeit:</label>
+        <input type="time" id="end_time" name="end_time" required><br>
+
+        <button class="submitBtn" type="submit">Eintrag hinzufügen</button>
+    </form>
+</div>
+
+{% endblock %}
