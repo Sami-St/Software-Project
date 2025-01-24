@@ -151,7 +151,7 @@ def teacher_students():
     return render_template('teacher_students.html', students=students)
 
 # # Route für einzelne Schülerdetails
-@user_interactions.route('/teacher/student/<int:id>')
+@user_interactions.route('/student/<int:id>')
 @login_required
 def teacher_student_detail(id):
     if current_user.role != 'Lehrer':
@@ -260,10 +260,15 @@ def schüler_info(id):
     
     fächer = ["Mathematik", "Deutsch", "Sachunterricht", "Kunst", "Sport", "Relgion", "Englisch", "Musik", "Geschichte"]
 
-    noten_liste = zip(fächer, noten)
-    anwesenheiten_liste = zip(fächer, anwesenheiten)
+    anwesenheiten_liste = None
+    noten_liste = None
+
     if anwesenheiten and noten:
-        return render_template("schüler_info.html", anwesenheiten_liste=anwesenheiten_liste, noten_liste=noten_liste)
+
+        noten_liste = zip(fächer, noten)
+        anwesenheiten_liste = zip(fächer, anwesenheiten)
+
+    return render_template("schüler_info.html", anwesenheiten_liste=anwesenheiten_liste, noten_liste=noten_liste)
     
 @user_interactions.route('/inhalte_verwalten/lehrer')
 @login_required
@@ -308,7 +313,7 @@ def lehrer_detail(lehrer_id):
 def edit_lehrer(lehrer_id):
 
     if request.method == "POST":
-        
+
         if current_user.role != "Verwalter":
             return redirect(url_for('authentication.login'))
         

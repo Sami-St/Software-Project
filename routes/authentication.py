@@ -32,6 +32,7 @@ def register():
             klasse = data["klasse"]
 
             email_exists = User.query.filter_by(email=new_user.email).first() 
+            klasse_exists = Klasse.query.filter_by(name=klasse)
 
             if email_exists:
                 return jsonify({"message": "Email Adresse existiert bereits."}), 409
@@ -40,9 +41,16 @@ def register():
             db.session.flush() # Flush to get the new_user ID without committing
             
             if klasse:
+                
+                if klasse_exists:
 
-                schüler_klasse = Klasse(schüler_id=new_user.id, schüler_name=new_user.username, name=klasse)
-                db.session.add(schüler_klasse)
+                    klasse_exists.schüler_id=new_user.id
+                    klasse_exists.scüler_name=new_user.username
+
+                else:
+
+                    new_klasse = Klasse(schüler_id=new_user.id, schüler_name=new_user.username, name=klasse)
+                    db.session.add(new_klasse)
 
             if fächer:
 
