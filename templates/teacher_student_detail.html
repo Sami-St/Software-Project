@@ -20,13 +20,28 @@
         <tr>
             <td class="userTabelleCellID">{{ student.id }}</td>
             <td class="userTabelleCell"><a href="{{ url_for('user_interactions.edit_student', id=student.id) }}">{{ student.username }}</td>
-            <td class="userTabelleCell">{{ student.email }}</td>
+            <!-- <td class="userTabelleCell">{{ student.email }}</td> -->
         </tr>
     </tbody>
 </table>
-    <form action="{{ url_for('user_interactions.delete_student', id=student.id) }}" method="post">
-        <input class="löschenBtn" type="submit" value="Löschen">
+    <form id="deleteForm" action="{{ url_for('user_interactions.delete_student', id=student.id) }}" method="post">
+        <input class="löschenBtn" value="Löschen">
     </form>
 </div>
+{% endblock %}
 
+{% block scripts %}
+    <script>document.addEventListener("DOMContentLoaded", () => {
+        const deleteBtn = document.querySelector(".löschenBtn");
+        const deleteForm = document.getElementById("deleteForm");
+        deleteBtn.addEventListener("click", (event) => {
+            event.preventDefault()
+            if (confirm("Dieses Schülerprofil wird gelöscht. Fortfahren?")){
+                deleteForm.submit()
+            } else {
+                return
+            }
+        })
+    })
+    </script>
 {% endblock %}

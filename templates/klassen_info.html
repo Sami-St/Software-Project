@@ -28,14 +28,14 @@ Inhalte verwalten
             {% for schüler in schüler_liste %}
             <tr>
                 <td class="userTabelleCellID">{{ schüler["schüler_id"] }}</td>
-                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.schüler_info', id=schüler['schüler_id']) }}">{{ schüler['schüler_name'] }}</a></td>
+                <td class="userTabelleCell"><a style="text-decoration: none;" href="{{ url_for('user_interactions.schüler_info', id=schüler['schüler_id']) }}">{{ schüler['schüler_name'] }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     
 {% else %}
-    <p>Es sind keine Lehrer vorhanden.</p>
+    <p class="notFoundMsg">Es sind keine Schüler vorhanden.</p>
 </div>
 {% endif %}
 

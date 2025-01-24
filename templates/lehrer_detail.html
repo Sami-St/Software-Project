@@ -8,9 +8,9 @@ Lehrer Details
 
 <div class="userinterface-noten">
     <div>
-        <h1 class="title">User: {{ user.username }}, Email: {{ user.email }}</h1>
+        <h1 class="lehrerTitle">User: {{ user.username }}, Email: {{ user.email }}</h1>
         <ul>
-            <h2 style="text-decoration: underline;">fächer:</h2>
+            <h2 style="text-decoration: underline;">Fächer:</h2>
             {% for fach in fächer %}
                 <li>{{ fach }}</li>
             {% endfor %}

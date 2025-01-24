@@ -13,7 +13,6 @@ Lehrer verwalten
     <table class="userTabelle">
         <thead class="userTabelleHeader">
             <tr>
-                
                 <th class="userTabelleHeader">ID</th>
                 <div class="addLehrerBtn">
                     <a href="{{ url_for('authentication.register') }}">
@@ -27,14 +26,14 @@ Lehrer verwalten
             {% for lehrer in teacher %}
             <tr>
                 <td class="userTabelleCellID">{{ lehrer.id }}</td>
-                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.lehrer_detail', lehrer_id=lehrer.id) }}">{{ lehrer.username }}</a></td>
+                <td class="userTabelleCell"><a style="text-decoration: none;" href="{{ url_for('user_interactions.lehrer_detail', lehrer_id=lehrer.id) }}">{{ lehrer.username }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     
 {% else %}
-    <p>Es sind keine Lehrer vorhanden.</p>
+    <p class="notFoundMsg">Es sind keine Lehrer vorhanden.</p>
 </div>
 {% endif %}
 

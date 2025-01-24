@@ -14,22 +14,25 @@ Inhalte verwalten
     <table class="userTabelle">
         <thead class="userTabelleHeader">
             <tr>
-                <th class="userTabelleHeader">ID</th>
-                <th class="userTabelleHeader">Klasse</th>
+                <th class="userTabelleHeader" style="width: 200px;">Klassen</th>
             </tr>
         </thead>
         <tbody>
             {% for klasse in klassen %}
             <tr>
-                <td class="userTabelleCellID">{{ klasse["id"] }}</td>
-                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.klassen_info', id=klasse['id']) }}">{{ klasse["name"] }}</a></td>
+                <td class="userTabelleCell"><a style="text-decoration: none;" href="{{ url_for('user_interactions.klassen_info', id=klasse['id']) }}">{{ klasse["name"] }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
 {% else %}
-    <p>Es sind keine Lehrer vorhanden.</p>
+    <p class="notFoundMsg">Es sind keine Klassen vorhanden.</p>
+    <div class="addLehrerBtn" style="margin-left: 50%;">
+        <a href="{{ url_for('authentication.register') }}">
+            <span class="addLehrerBtnSpan">+</span>
+        </a>
+    </div>
 </div>
 {% endif %}
 
