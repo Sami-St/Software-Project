@@ -7,12 +7,30 @@ Inhalte verwalten
 {% endblock %}
 
 {% block content %}
-<h1 class="title" style="display: inline-block; margin-bottom: 0;">Klasse auswählen:</h1>
-    <div class="user-interface-klassen">
-        {% if klassen %}
+<h1 class="title">Klasse auswählen:</h1>
+
+{% if klassen %}
+<div class="user-interface-klassen">
+    <table class="userTabelle">
+        <thead class="userTabelleHeader">
+            <tr>
+                <th class="userTabelleHeader">ID</th>
+                <th class="userTabelleHeader">Klasse</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for klasse in klassen %}
-                <a class="itemEl" href="{{ url_for('user_interactions.klassen_info', id=klasse['id']) }}">{{ klasse["name"] }}</a>
+            <tr>
+                <td class="userTabelleCellID">{{ klasse["id"] }}</td>
+                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.klassen_info', id=klasse['id']) }}">{{ klasse["name"] }}</a></td>
+            </tr>
             {% endfor %}
-        {% endif %}
-    </div>
+        </tbody>
+    </table>
+
+{% else %}
+    <p>Es sind keine Lehrer vorhanden.</p>
+</div>
+{% endif %}
+
 {% endblock %}

@@ -7,12 +7,36 @@ Inhalte verwalten
 {% endblock %}
 
 {% block content %}
-<h1 class="title" style="display: inline-block; margin-bottom: 0;">Schüler auswählen:</h1>
-    <div class="user-interface-klassen">
-        {% if schüler_liste %}
+
+<h1 class="title">Schüler auswählen:</h1>
+
+{% if schüler_liste %}
+<div class="user-interface-lehrer">
+    <table class="userTabelle">
+        <thead class="userTabelleHeader">
+            <tr>
+                <th class="userTabelleHeader">ID</th>
+                <div class="addLehrerBtn">
+                    <a href="{{ url_for('authentication.register') }}">
+                        <span class="addLehrerBtnSpan">+</span>
+                    </a>
+                </div>
+                <th class="userTabelleHeader">Benutzername</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for schüler in schüler_liste %}
-                <a href="{{ url_for('user_interactions.schüler_info', id=schüler['schüler_id']) }}" class="itemEl">{{ schüler["schüler_name"] }}</a>
+            <tr>
+                <td class="userTabelleCellID">{{ schüler["schüler_id"] }}</td>
+                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.schüler_info', id=schüler['schüler_id']) }}">{{ schüler['schüler_name'] }}</a></td>
+            </tr>
             {% endfor %}
-        {% endif %}
-    </div>
+        </tbody>
+    </table>
+    
+{% else %}
+    <p>Es sind keine Lehrer vorhanden.</p>
+</div>
+{% endif %}
+
 {% endblock %}

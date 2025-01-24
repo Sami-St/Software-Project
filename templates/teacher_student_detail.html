@@ -1,17 +1,32 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ student.name }} - Detailansicht</title>
-</head>
-<body>
-    <h1>{{ student.name }}</h1>
-    <p>Klasse: {{ student.class_group }}</p>
-    <p>Email: {{ student.email }}</p>
-    <a href="{{ url_for('user_interactions.edit_student', id=student.id) }}">Bearbeiten</a>
+{% extends "base.html" %}
+
+{% block title %}
+
+{{ student.name }} - Detailansicht
+
+{% endblock %}
+
+{% block content %}
+<div class="user-interface-lehrer">
+<table class="userTabelle">
+    <thead class="userTabelleHeader">
+        <tr>
+            <th class="userTabelleHeader">ID</th>
+            <th class="userTabelleHeader">Benutzername</th>
+            <th class="userTabelleHeader">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="userTabelleCellID">{{ student.id }}</td>
+            <td class="userTabelleCell"><a href="{{ url_for('user_interactions.edit_student', id=student.id) }}">{{ student.username }}</td>
+            <td class="userTabelleCell">{{ student.email }}</td>
+        </tr>
+    </tbody>
+</table>
     <form action="{{ url_for('user_interactions.delete_student', id=student.id) }}" method="post">
-        <input type="submit" value="Löschen">
+        <input class="löschenBtn" type="submit" value="Löschen">
     </form>
-</body>
-</html>
+</div>
+
+{% endblock %}

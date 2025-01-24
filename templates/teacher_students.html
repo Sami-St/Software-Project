@@ -9,19 +9,19 @@ Schüler verwalten
 <h1 class="title">Schülerliste</h1>
 
 {% if students %}
-<div style="margin-left: 15%;">
-    <table>
-        <thead>
+<div class="user-interface-lehrer">
+    <table class="userTabelle">
+        <thead class="userTabelleHeader">
             <tr>
-                <th>id</th>
-                <th>username</th>
+                <th class="userTabelleHeader">ID</th>
+                <th class="userTabelleHeader">username</th>
             </tr>
         </thead>
         <tbody>
             {% for student in students %}
             <tr>
-                <td>{{ student["id"] }}</td>
-                <td><a class="itemEl" href="{{ url_for('user_interactions.teacher_student_detail', id=student['id']) }}" style="background-color: white;">{{ student["username"] }}</a></td>
+                <td class="userTabelleCellID">{{ student["id"] }}</td>
+                <td class="userTabelleCell"><a href="{{ url_for('user_interactions.teacher_student_detail', id=student['id']) }}">{{ student["username"] }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
