@@ -2,8 +2,18 @@ body {
     background-image: url("../images/school.png");
     background-size: cover;
     background-repeat: no-repeat;
-    display: block;
+    height: 100vh;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .registerH2 {
@@ -14,13 +24,11 @@ body {
 }
 
 .loginH2 {
-    display: inline-block;
     background-color: white;
     font-weight: bold;
-    font-family: arial;
-    font-size: 25px;
+    font-size: 24px;
     padding: 20px 500px;
-    margin-top: 45px;
+    margin-bottom: 1rem;
 }
 
 #registerForm {
@@ -70,7 +78,6 @@ body {
     color: white;
     font-size: 15px;
     font-weight: bold;
-    font-family: arial;
     text-shadow: 1px 1px black;
     background-color: #0C098C;
     padding: 10px 40px;
@@ -89,7 +96,6 @@ body {
     background-color:#0C098C;
     color: white;
     font-weight: bold;
-    font-family: arial;
     text-shadow: 1px 1px black;
     padding: 5px 10px;
     border-radius: 5px;
@@ -111,7 +117,6 @@ body {
 
 label {
     font-weight: bold;
-    font-family: arial;
 }
 
 .loginEyeIcon {
@@ -135,7 +140,6 @@ label {
 
 .messageEl {
     font-weight: bold;
-    font-family: arial;
     font-size: 15px;
     padding: 10px 30px;
     margin-top: 0;
